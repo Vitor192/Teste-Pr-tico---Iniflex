@@ -48,7 +48,6 @@ public static void main(String[] args) {
         BigDecimal novoSalario = f.getSalario().multiply(BigDecimal.valueOf(1.10));
         f.setSalario(novoSalario);
         
-
         System.out.printf("Nome: %s | Salário atualizado: %s%n",
                 f.getNome(),
                 FormatUtils.formatMoney(f.getSalario()));
@@ -80,9 +79,11 @@ public static void main(String[] args) {
             .orElse(null);
 
     if (maisVelho != null) {
-        int idade = Period.between(maisVelho.getDataNascimento(), LocalDate.now()).getYears();
-        System.out.printf("\nFuncionário mais velho: %s | Idade: %d%n",
-                maisVelho.getNome(), idade);
+
+        LocalDate hoje = LocalDate.now();
+        int idade = Period.between(maisVelho.getDataNascimento(), hoje).getYears();
+        System.out.printf("\nFuncionário mais velho: %s | Idade: %d anos | Data de Nascimento: %s%n",
+                maisVelho.getNome(), idade, FormatUtils.formatDate(maisVelho.getDataNascimento()));
     }
 
 
@@ -92,6 +93,7 @@ public static void main(String[] args) {
             .forEach(f -> System.out.println(f.getNome()));
 
 
+
     BigDecimal totalSalarios = funcionarios.stream()
             .map(Funcionario::getSalario)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -99,12 +101,16 @@ public static void main(String[] args) {
     System.out.printf("\nTotal salários: %s%n", FormatUtils.formatMoney(totalSalarios));
 
 
+
     BigDecimal salarioMinimo = new BigDecimal("1212.00");
-    System.out.println("\n--- Salários mínimos por funcionário ---");
+    System.out.println("\n--- Salários mínimos por funcionário (com base no salário após aumento de 10%) ---");
     funcionarios.forEach(f -> {
+
         BigDecimal qtd = f.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
-        System.out.printf("%s ganha %s salários mínimos%n",
-                f.getNome(), qtd.toPlainString());
+        System.out.printf("%s ganha %s salários mínimos (salário atual: %s)%n",
+                f.getNome(), 
+                qtd.toPlainString(),
+                FormatUtils.formatMoney(f.getSalario()));
     });
  }
 }

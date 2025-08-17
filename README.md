@@ -32,10 +32,4 @@ O projeto atende a todos os requisitos do desafio, que incluem:
 11. **Total de Salários**: Cálculo e impressão da soma total de todos os salários.
 12. **Salários Mínimos**: Cálculo e impressão de quantos salários mínimos cada funcionário recebe, considerando o valor de R$1212,00.
 
-## Como Executar
 
-1.  Clone este repositório.
-2.  Abra o projeto em sua IDE Java preferida (como IntelliJ IDEA, Eclipse ou VS Code).
-3.  Execute a classe `Principal.java`. O console exibirá a saída de cada etapa do desafio.
-
----
