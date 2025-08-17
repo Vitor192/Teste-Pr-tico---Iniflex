@@ -1,5 +1,5 @@
 import model.Funcionario;
-import service.FormaUtils;
+import service.FormatUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,15 +35,24 @@ public static void main(String[] args) {
     funcionarios.forEach(f -> {
         System.out.printf("Nome: %s | Data Nascimento: %s | Salário: %s | Função: %s%n",
                 f.getNome(),
-                FormaUtils.formatDate(f.getDataNascimento()),
-                FormaUtils.formatMoney(f.getSalario()),
+                FormatUtils.formatDate(f.getDataNascimento()),
+                FormatUtils.formatMoney(f.getSalario()),
                 f.getFuncao());
     });
 
 
-    funcionarios.forEach(f -> f.setSalario(
-            f.getSalario().multiply(BigDecimal.valueOf(1.10))
-    ));
+
+    System.out.println("\n--- Salários após aumento de 10% ---");
+    funcionarios.forEach(f -> {
+        // Calcula o novo salário com aumento de 10%
+        BigDecimal novoSalario = f.getSalario().multiply(BigDecimal.valueOf(1.10));
+        f.setSalario(novoSalario);
+        
+
+        System.out.printf("Nome: %s | Salário atualizado: %s%n",
+                f.getNome(),
+                FormatUtils.formatMoney(f.getSalario()));
+    });
 
 
     Map<String, List<Funcionario>> funcionariosPorFuncao =
@@ -87,7 +96,7 @@ public static void main(String[] args) {
             .map(Funcionario::getSalario)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    System.out.printf("\nTotal salários: %s%n", FormaUtils.formatMoney(totalSalarios));
+    System.out.printf("\nTotal salários: %s%n", FormatUtils.formatMoney(totalSalarios));
 
 
     BigDecimal salarioMinimo = new BigDecimal("1212.00");
