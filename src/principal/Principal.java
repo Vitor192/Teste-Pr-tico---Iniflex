@@ -1,5 +1,5 @@
 import model.Funcionario;
-import utils.FormaUtils;
+import service.FormaUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Principal {
 public static void main(String[] args) {
 
-    // 3.1 Inserir funcionários (dados da tabela)
+
     List<Funcionario> funcionarios = new ArrayList<>();
     funcionarios.add(new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador"));
     funcionarios.add(new Funcionario("João", LocalDate.of(1990, 5, 12), new BigDecimal("2284.38"), "Operador"));
@@ -27,10 +27,10 @@ public static void main(String[] args) {
     funcionarios.add(new Funcionario("Heloísa", LocalDate.of(2003, 5, 24), new BigDecimal("1606.85"), "Eletricista"));
     funcionarios.add(new Funcionario("Helena", LocalDate.of(1996, 9, 2), new BigDecimal("2799.93"), "Gerente"));
 
-    // 3.2 Remover João
+
     funcionarios.removeIf(f -> f.getNome().equalsIgnoreCase("João"));
 
-    // 3.3 Imprimir todos os funcionários formatados
+
     System.out.println("\n--- Lista de Funcionários ---");
     funcionarios.forEach(f -> {
         System.out.printf("Nome: %s | Data Nascimento: %s | Salário: %s | Função: %s%n",
@@ -40,23 +40,23 @@ public static void main(String[] args) {
                 f.getFuncao());
     });
 
-    // 3.4 Aumento de 10% nos salários
+
     funcionarios.forEach(f -> f.setSalario(
             f.getSalario().multiply(BigDecimal.valueOf(1.10))
     ));
 
-    // 3.5 Agrupar funcionários por função
+
     Map<String, List<Funcionario>> funcionariosPorFuncao =
             funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao));
 
-    // 3.6 Imprimir agrupados por função
+
     System.out.println("\n--- Funcionários por Função ---");
     funcionariosPorFuncao.forEach((funcao, lista) -> {
         System.out.println("Função: " + funcao);
         lista.forEach(f -> System.out.println("  - " + f.getNome()));
     });
 
-    // 3.8 Funcionários aniversariantes em outubro e dezembro
+
     System.out.println("\n--- Aniversariantes (Outubro e Dezembro) ---");
     funcionarios.stream()
             .filter(f -> {
@@ -65,7 +65,7 @@ public static void main(String[] args) {
             })
             .forEach(f -> System.out.println(f.getNome()));
 
-    // 3.9 Funcionário mais velho
+
     Funcionario maisVelho = funcionarios.stream()
             .min(Comparator.comparing(Funcionario::getDataNascimento))
             .orElse(null);
@@ -76,20 +76,20 @@ public static void main(String[] args) {
                 maisVelho.getNome(), idade);
     }
 
-    // 3.10 Funcionários em ordem alfabética
+
     System.out.println("\n--- Funcionários em ordem alfabética ---");
     funcionarios.stream()
             .sorted(Comparator.comparing(Funcionario::getNome))
             .forEach(f -> System.out.println(f.getNome()));
 
-    // 3.11 Soma dos salários
+
     BigDecimal totalSalarios = funcionarios.stream()
             .map(Funcionario::getSalario)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
     System.out.printf("\nTotal salários: %s%n", FormaUtils.formatMoney(totalSalarios));
 
-    // 3.12 Quantos salários mínimos cada funcionário ganha
+
     BigDecimal salarioMinimo = new BigDecimal("1212.00");
     System.out.println("\n--- Salários mínimos por funcionário ---");
     funcionarios.forEach(f -> {
